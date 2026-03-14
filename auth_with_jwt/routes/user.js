@@ -73,7 +73,7 @@ userRouter.get("/purchasedCourses", userMiddleware, async (req, res) => {
 });
 
 userRouter.get("/courses", async (req, res) => {
-    // get the purchased courses by the user
+    // get the all available courses
    const courses = await Course.find({});
    return res.json({
     available_courses: courses
