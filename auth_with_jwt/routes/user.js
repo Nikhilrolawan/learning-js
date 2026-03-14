@@ -1,8 +1,9 @@
 import express from "express";
-import { userMiddleware } from "../middleware/user.js";
+import jwt from "jsonwebtoken";
 import Router from "express";
+
+import { userMiddleware } from "../middleware/user.js";
 import { User, Course } from "../database/mongo.js";
-import { log } from "node:console";
 
 const userRouter = Router()
 userRouter.use(express.json())
@@ -30,7 +31,7 @@ userRouter.post("/signup", async (req, res) => {
 
 userRouter.post("/signin", async (req, res) => {
     const { username, password } = req.body;
-    const exist = await Admin.find({ username, password });
+    const exist = await User.find({ username, password });
     if (exist) {
         const token = await jwt.sign(username, process.env.JWT_SECRET);
         return res.json({
@@ -48,7 +49,7 @@ userRouter.post("/courses/:courseID", userMiddleware, async (req, res) => {
     // purchasing a course by a user
     try {
         const courseID = req.params.courseID;
-        const username = req.headers.username;
+        const username = req.username;
         await User.updateOne(
             { username: username },
             { "$push": { purchasedCourses: courseID } }
@@ -64,11 +65,19 @@ userRouter.post("/courses/:courseID", userMiddleware, async (req, res) => {
 
 userRouter.get("/purchasedCourses", userMiddleware, async (req, res) => {
     // get the purchased courses by the user
-   const username = req.headers.username;
+   const username = req.username;
    const user = await User.findOne({username}).populate("purchasedCourses", "title");
    return res.json({
     your_courses: user.purchasedCourses,
+ });
 });
+
+userRouter.get("/courses", async (req, res) => {
+    // get the purchased courses by the user
+   const courses = await Course.find({});
+   return res.json({
+    available_courses: courses
+ });
 });
 
 export { userRouter };
