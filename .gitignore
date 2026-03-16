@@ -1,0 +1,24 @@
+# Dependencies (The biggest one - never commit this!)
+node_modules/
+
+# Environment variables (Contains your MongoDB password)
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Build/Dist folders (If using TypeScript or a bundler)
+dist/
+build/
+out/
+
+# IDE specific files
+.vscode/
+.idea/
+.DS_Store

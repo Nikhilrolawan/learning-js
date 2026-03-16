@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+    </style>
+<body>
+    <input type = "text" id = "Input1" placeholder="input1"></input> <br></br>
+    <input type = "text" id = "Input2" placeholder="input2"></input> <br></br>
+    <button onclick="calculate_sum()">Calculate Sum</button> <br></br>
+    <div id = "sum"></div>
+
+</body>
+<script>
+    function calculate_sum(){
+        const input1 = document.getElementById("Input1").value
+        const input2 = document.getElementById("Input2").value
+        const val = document.getElementById("sum");
+        val.innerHTML = parseInt(input1)+parseInt(input2);
+    }
+</script>
+</html>

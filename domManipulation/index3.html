@@ -1,0 +1,38 @@
+<html>
+
+    <body>
+        <div id = "bt">
+        <button id = "btn"></button>
+        </div>
+        <script>
+            let state ={
+                count: 0
+            }
+            function onButtonPress(){
+                state.count ++;
+                buttonComponentReRender();
+            }
+            function buttonComponentReRender(){
+                document.getElementById("btn").innerHTML = "";
+                const component = buttonComponent(state);
+                document.getElementById("btn").appendChild(component);
+            }
+            function buttonComponent(state){
+                const button = document.getElementById("btn");
+                button.innerHTML = `Counter ${state.count}`;
+                button.setAttribute("onClick", "onButtonPress()");
+                return button;
+            }
+            buttonComponentReRender();
+            
+        </script>
+        <style>
+            #bt{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: large;
+            }
+        </style>
+    </body>
+</html>
